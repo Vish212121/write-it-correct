@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Gembar selection placement browser regression</title>
+  <style>
+    body { margin: 0; font: 14px system-ui, sans-serif; }
+    textarea, input { box-sizing: border-box; font: 18px/26px Arial, sans-serif; padding: 15px 24px; border: 1px solid #777; }
+    #full { position: fixed; top: 40px; left: 20px; width: 50vw; height: 76vh; overflow: auto; }
+    #wrapped { position: fixed; top: 40px; right: 20px; width: 230px; height: 180px; overflow: auto; }
+    #single { position: fixed; top: 240px; right: 20px; width: 230px; }
+    #rich { position: fixed; top: 320px; right: 20px; width: 230px; height: 180px; overflow: auto; }
+    #results { position: fixed; right: 20px; bottom: 10px; max-width: 50vw; max-height: 25vh; overflow: auto; background: white; font: 11px/1.4 monospace; }
+  </style>
+</head>
+<body>
+  <textarea id="full"></textarea>
+  <textarea id="wrapped"></textarea>
+  <input id="single" type="text">
+  <div id="rich" contenteditable="true"><p>First line has a typo.</p><p>Second line has one too.</p></div>
+  <pre id="results"></pre>
+  <script src="../../extension/selection-geometry.js"></script>
+  <script>
+    (function () {
+      const geometry = window.GembarSelectionGeometry;
+      const vw = document.documentElement.clientWidth;
+      const vh = document.documentElement.clientHeight;
+      const results = [];
+      function check(name, condition, detail) {
+        results.push({ name, pass: !!condition, detail });
+      }
+      function selected(field, start, end) {
+        field.setSelectionRange(start, end);
+        return geometry.getTextFieldSelectionRect(field, start, end, vw, vh);
+      }
+      const full = document.getElementById("full");
+      full.value = "This sentence has a typo.\nThe second line has one too.";
+      let anchor = selected(full, 0, full.value.length);
+      let field = full.getBoundingClientRect();
+      check("full-height textarea anchors near selected lines", anchor && anchor.top < field.top + 100,
+        { anchor, fieldBottom: field.bottom });
+      let position = geometry.getNearPosition(anchor, 400, 44, vw, vh, { preferBelow: false, gap: 10 });
+      check("toolbar stays near the selection rather than viewport bottom", position.top < 200,
+        { toolbarTop: position.top, viewportHeight: vh });
+
+      const wrapped = document.getElementById("wrapped");
+      wrapped.value = "A long sentence wraps across several lines inside this narrow textarea without moving the toolbar to the box bottom.";
+      anchor = selected(wrapped, 0, wrapped.value.length);
+      field = wrapped.getBoundingClientRect();
+      check("wrapped text anchors to its last visible line", anchor && anchor.top > field.top + 35 && anchor.bottom <= field.bottom,
+        { anchor, fieldTop: field.top, fieldBottom: field.bottom });
+
+      wrapped.value = "AAAAAAAAAAAAAA morning continues on this line.";
+      const wordStart = wrapped.value.indexOf("morning");
+      anchor = selected(wrapped, wordStart, wordStart + 3);
+      check("word-wrap boundary keeps a selected prefix on the word's line", anchor && anchor.top > field.top + 30,
+        { anchor, fieldTop: field.top });
+
+      wrapped.value = Array.from({ length: 40 }, (_, i) => `Line ${i} has sample text`).join("\n");
+      const middle = wrapped.value.indexOf("Line 20");
+      wrapped.setSelectionRange(middle, middle + 7);
+      wrapped.scrollTop = 19 * 26;
+      anchor = geometry.getTextFieldSelectionRect(wrapped, middle, middle + 7, vw, vh);
+      field = wrapped.getBoundingClientRect();
+      check("internal scroll maps the visible line", anchor && anchor.top >= field.top && anchor.bottom <= field.bottom,
+        { anchor, scrollTop: wrapped.scrollTop, fieldTop: field.top });
+      wrapped.setSelectionRange(0, 6);
+      wrapped.scrollTop = wrapped.scrollHeight;
+      anchor = geometry.getTextFieldSelectionRect(wrapped, 0, 6, vw, vh);
+      check("hidden selection does not anchor to an edge", anchor === null, { anchor, scrollTop: wrapped.scrollTop });
+
+      const single = document.getElementById("single");
+      single.value = "A long single line ends with TYPO";
+      const word = single.value.indexOf("TYPO");
+      single.setSelectionRange(word, word + 4);
+      single.scrollLeft = single.scrollWidth;
+      anchor = geometry.getTextFieldSelectionRect(single, word, word + 4, vw, vh);
+      field = single.getBoundingClientRect();
+      check("horizontally scrolled input anchors to visible text", anchor && anchor.left >= field.left && anchor.right <= field.right,
+        { anchor, scrollLeft: single.scrollLeft });
+
+      const rich = document.getElementById("rich");
+      const range = document.createRange();
+      range.selectNodeContents(rich.querySelector("p:last-child"));
+      anchor = geometry.getSelectionAnchorRect(range, rich.getBoundingClientRect(), vw, vh);
+      check("contenteditable range uses text fragment", anchor && anchor.height < rich.getBoundingClientRect().height,
+        { anchor });
+
+      document.getElementById("results").textContent = JSON.stringify({ passed: results.filter(r => r.pass).length, total: results.length, results }, null, 2);
+    })();
+  </script>
+</body>
+</html>

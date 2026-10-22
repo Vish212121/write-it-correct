@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gembar live editing fixture</title>
+  <style>
+    :root { font: 16px/1.55 system-ui, sans-serif; color: #242635; background: #f7f8fb; }
+    body { max-width: 860px; margin: 36px auto; padding: 0 24px 100px; }
+    h1 { font-size: 28px; }
+    p { color: #52576b; }
+    .card { margin: 24px 0; padding: 20px; border: 1px solid #d8dbe5; border-radius: 12px; background: white; }
+    label { display: block; margin: 16px 0 6px; font-weight: 650; }
+    textarea, input, [contenteditable="true"] { box-sizing: border-box; width: 100%; padding: 12px; border: 1px solid #aeb4c3; border-radius: 8px; font: inherit; }
+    textarea { min-height: 110px; resize: vertical; }
+    [contenteditable="true"] { min-height: 88px; background: white; }
+    .surrounding-copy { columns: 2; column-gap: 34px; }
+  </style>
+</head>
+<body>
+  <h1>Gembar live editing fixture</h1>
+  <p>This local page exercises ordinary text fields, keyboard and mouse selection, and nested contenteditable structures modeled on common chat and mail composers. These are local simulations, not live copies of those sites. The text below helps check that the suggestion panel stays out of the way on a text-heavy page.</p>
+  <section class="card">
+    <label for="test-area">Textarea</label>
+    <textarea id="test-area" placeholder="Type a short sentence with a typo, then select the typo."></textarea>
+    <label for="test-input">Single-line input</label>
+    <input id="test-input" type="text" placeholder="Type here to check input support">
+    <label for="test-editor">Contenteditable</label>
+    <div id="test-editor" contenteditable="true" role="textbox" aria-label="Contenteditable test field" data-placeholder="Type here to check rich editor support" data-tab="10">
+      <p><span>We recieved your mesage and I has sent the details.</span></p>
+      <p><span>Please let me know if you need anythink else.</span></p>
+    </div>
+    <label for="whatsapp-composer">WhatsApp-style nested composer</label>
+    <div id="whatsapp-composer" contenteditable="true" role="textbox" aria-label="Message" data-testid="conversation-compose-box-input">
+      <div><span>We recieved your mesage.</span></div>
+    </div>
+    <label for="slack-composer">Slack-style rich composer</label>
+    <div id="slack-composer" contenteditable="true" role="textbox" aria-label="Message to channel" data-qa="message_input">
+      <p><span>Could you send the update tommorow?</span></p>
+    </div>
+    <label for="gmail-composer">Gmail-style message body</label>
+    <div id="gmail-composer" contenteditable="true" role="textbox" aria-label="Message Body" g_editable="true">
+      <div><span>Thanks for the quick responce.</span></div>
+    </div>
+  </section>
+  <div class="surrounding-copy">
+    <p>Editors on real websites often sit beside navigation, help text, action buttons, and other visible controls. Gembar should keep its suggestions close to the current field and preserve the surrounding page content.</p>
+    <p>Typing a few words, pausing, and selecting a word should make it possible to verify the suggestion controls, their placement, their transparency, and their response when the text changes.</p>
+    <p>This fixture contains no remote scripts or external links. All test text stays on this local page, except when the installed extension sends a proofreading request to the configured Groq API.</p>
+    <p>Try both mouse selection and Shift plus the arrow keys. The toolbar should appear for either method. A compact suggestions chip is acceptable when the page has no clear area for the full suggestion card.</p>
+  </div>
+</body>
+</html>
