@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>write it correct Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="brand">
+      <span class="mark" aria-hidden="true"></span>
+      <h1>write it correct</h1>
+    </header>
+    <p class="tagline">Writing suggestions, right where you type.</p>
+
+    <section aria-labelledby="provider-heading">
+      <h2 id="provider-heading">Groq API key</h2>
+      <p class="desc">Your key is stored in this browser and sent directly to Groq when write it correct checks or rewrites text. Groq currently offers a free API plan with usage limits; you need a Groq account and API key.</p>
+      <p class="desc">Groq says inference inputs and outputs are not retained by default, with limited exceptions for reliability or abuse investigations. Review <a href="https://console.groq.com/docs/your-data" target="_blank" rel="noopener noreferrer">Groq's data controls</a>.</p>
+      <p class="desc"><a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer">Create or manage a Groq API key</a> · <a href="https://console.groq.com/docs/rate-limits" target="_blank" rel="noopener noreferrer">Free plan limits</a></p>
+      <div class="input-wrap">
+        <input id="apiKey" type="password" placeholder="gsk_..." autocomplete="off" spellcheck="false" aria-label="Groq API key" />
+        <button id="toggleKey" class="icon-btn" type="button" aria-label="Show API key">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <div class="row-between">
+        <button id="testKey" class="link-btn" type="button">Test connection</button>
+        <span id="testResult" class="status" role="status" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <hr />
+
+    <section aria-labelledby="model-heading">
+      <h2 id="model-heading">Model and language</h2>
+      <div class="grid-2">
+        <div>
+          <label class="field-label" for="model">Groq model ID</label>
+          <input id="model" type="text" value="qwen/qwen3.8-27b" placeholder="qwen/qwen3.8-27b" autocomplete="off" spellcheck="false" />
+        </div>
+        <div>
+          <label class="field-label" for="language">Writing language</label>
+          <select id="language">
+            <option value="auto">Auto-detect</option>
+            <option value="English">English</option>
+            <option value="Spanish">Spanish</option>
+            <option value="French">French</option>
+            <option value="German">German</option>
+            <option value="Portuguese">Portuguese</option>
+            <option value="Italian">Italian</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Marathi">Marathi</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Chinese">Chinese</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <section>
+      <div class="switch-row">
+        <div>
+          <h2 class="inline">Check while typing</h2>
+          <p class="desc tight">Shows spelling and writing suggestions after a short pause. Turn this off to stop live checks; selection rewrites remain available.</p>
+        </div>
+        <label class="switch">
+          <input id="liveCheck" type="checkbox" />
+          <span class="slider" aria-hidden="true"></span>
+        </label>
+      </div>
+    </section>
+
+    <hr />
+
+    <section aria-labelledby="disabled-sites-heading">
+      <h2 id="disabled-sites-heading">Disabled sites</h2>
+      <p class="desc">write it correct will not read or check text on these sites.</p>
+      <div class="input-wrap inline-add">
+        <input id="newSite" type="text" placeholder="example.com" autocomplete="off" aria-label="Site to disable" />
+        <button id="addSite" class="link-btn" type="button">Add</button>
+      </div>
+      <ul id="siteList" class="site-list"></ul>
+    </section>
+
+    <div class="save-bar">
+      <button id="save" class="btn-primary" type="button">Save settings</button>
+      <span id="saveResult" class="status" role="status" aria-live="polite"></span>
+    </div>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  :root { --ink: #1F2430; --muted: #6B7280; --line: #E5E7EB; --accent: #4A3F7A; --danger: #C0392B; }
+  * { box-sizing: border-box; }
+  body {
+    width: 240px; margin: 0; background: #fff; color: var(--ink);
+    font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  }
+  .pad { padding: 16px; }
+  h2 { font-size: 14px; font-weight: 700; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+  h2::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  .site { color: var(--muted); font-size: 11.5px; word-break: break-all; margin-bottom: 14px; }
+  .switch-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+  .switch-row span { font-weight: 500; }
+  .switch { position: relative; display: inline-block; width: 34px; height: 20px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; inset: 0; background: var(--line); border-radius: 999px; cursor: pointer; transition: background .15s; }
+  .slider::before { content: ""; position: absolute; width: 14px; height: 14px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform .15s; }
+  .switch input:checked + .slider { background: var(--accent); }
+  .switch input:checked + .slider::before { transform: translateX(14px); }
+  .warn { color: var(--danger); font-size: 11.5px; margin: -6px 0 12px; }
+  .warn[hidden] { display: none; }
+  button.link { width: 100%; border: none; background: none; color: var(--accent); padding: 0; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; text-align: left; }
+  button.link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <div class="pad">
+    <h2>write it correct</h2>
+    <div class="site" id="site"></div>
+    <div class="switch-row">
+      <span>Enabled on this site</span>
+      <label class="switch">
+        <input type="checkbox" id="siteToggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <p class="warn" id="noKeyWarn" hidden>No Groq API key set yet.</p>
+    <button id="openOptions" class="link" type="button">Open settings</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

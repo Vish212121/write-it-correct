@@ -1,0 +1,298 @@
+/* Gembar in-page styles. Kept deliberately minimal: one accent for chrome,
+   two semantic colors for issues (red = correctness, green = enhancement) —
+   the same split Grammarly itself uses, rather than a color per sub-type. */
+
+.gembar-overlay {
+  font-smooth: never;
+  -webkit-font-smoothing: none;
+}
+
+.gembar-issue {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.gembar-issue.gembar-spelling,
+.gembar-issue.gembar-grammar,
+.gembar-issue.gembar-punctuation { text-decoration-color: #C0392B; background: rgba(192, 57, 43, .13); }
+.gembar-issue.gembar-style,
+.gembar-issue.gembar-clarity { text-decoration-color: #1E8E5A; background: rgba(30, 142, 90, .13); }
+
+/* Rich-editor marks live above the page in a non-interactive layer. */
+.gembar-mark-layer {
+  position: fixed !important;
+  inset: 0 !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+  z-index: 2147483000 !important;
+}
+.gembar-mark {
+  position: absolute !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  border-radius: 2px 2px 0 0 !important;
+  pointer-events: none !important;
+  background: rgba(192, 57, 43, .12) !important;
+  border-bottom: 2px solid rgba(192, 57, 43, .78) !important;
+}
+.gembar-mark.gembar-style,
+.gembar-mark.gembar-clarity {
+  background: rgba(30, 142, 90, .12) !important;
+  border-bottom-color: rgba(30, 142, 90, .78) !important;
+}
+
+.gembar-popup, .gembar-toolbar {
+  --gb-ink: #1F2430;
+  --gb-muted: #9A97A8;
+  --gb-accent: #4A3F7A;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  animation: gembar-pop .1s ease-out;
+}
+.gembar-suggestions {
+  position: fixed;
+  z-index: 2147483647;
+  box-sizing: border-box;
+  width: min(360px, calc(100vw - 32px));
+  max-height: min(360px, calc(100vh - 32px));
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 12px;
+  border: 1px solid #DED9EA;
+  border-radius: 12px;
+  background: rgba(250, 248, 245, .76);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: #1C1B29;
+  font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  box-shadow: 0 5px 18px rgba(37, 28, 67, .12);
+  isolation: isolate;
+  color-scheme: light;
+}
+.gembar-suggestions,
+.gembar-suggestions * { box-sizing: border-box; }
+.gembar-suggestions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  color: #4A3F7A;
+  font-size: 13px;
+}
+.gembar-suggestions-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.gembar-suggestions-close,
+.gembar-suggestions-apply-all,
+.gembar-suggestion-actions button {
+  border: 0;
+  border-radius: 6px;
+  padding: 6px 9px;
+  font: 600 12px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  cursor: pointer;
+}
+.gembar-suggestions-apply-all {
+  background: #4A3F7A;
+  color: #fff;
+  white-space: nowrap;
+}
+.gembar-suggestions-close {
+  background: transparent;
+  color: #726F82;
+}
+.gembar-suggestions-close:hover { background: rgba(239, 235, 250, .8); }
+.gembar-suggestions-apply-all:hover { filter: brightness(1.08); }
+.gembar-suggestions-toggle {
+  border: 0;
+  border-radius: 6px;
+  padding: 6px 8px;
+  background: rgba(239, 235, 250, .72);
+  color: #4A3F7A;
+  font: 600 12px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.gembar-suggestions-toggle[hidden] { display: none; }
+.gembar-suggestions-toggle:hover { background: rgba(239, 235, 250, .95); }
+.gembar-suggestions.gembar-suggestions-compact {
+  width: auto;
+  max-width: calc(100vw - 32px);
+  max-height: none;
+  overflow: visible;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(250, 248, 245, .62);
+  box-shadow: 0 3px 12px rgba(37, 28, 67, .1);
+}
+.gembar-suggestions-compact .gembar-suggestions-header { gap: 8px; margin: 0; }
+.gembar-suggestions-compact .gembar-suggestions-header-actions { gap: 3px; }
+.gembar-suggestions-compact .gembar-suggestion-list,
+.gembar-suggestions-compact .gembar-suggestions-more { display: none; }
+.gembar-suggestions-compact .gembar-suggestions-apply-all { display: none; }
+.gembar-suggestions-compact .gembar-suggestions-close,
+.gembar-suggestions-compact .gembar-suggestions-apply-all,
+.gembar-suggestions-compact .gembar-suggestions-toggle { padding: 5px 7px; }
+.gembar-suggestions button:focus-visible {
+  outline: 2px solid #4A3F7A;
+  outline-offset: 2px;
+}
+.gembar-suggestion-item {
+  padding: 9px 0;
+  border-top: 1px solid #E7E3DB;
+}
+.gembar-suggestion-message { color: #726F82; font-size: 11px; }
+.gembar-suggestion-change {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+.gembar-suggestion-original {
+  color: #A5322A;
+  text-decoration: line-through;
+}
+.gembar-suggestion-arrow { color: #726F82; }
+.gembar-suggestion-replacement { color: #1C1B29; }
+.gembar-suggestion-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 7px;
+}
+.gembar-suggestion-actions .gembar-suggestion-accept {
+  background: #4A3F7A;
+  color: #fff;
+}
+.gembar-suggestion-actions .gembar-suggestion-ignore {
+  background: #EFEBFA;
+  color: #4A3F7A;
+}
+.gembar-suggestion-actions button:hover { filter: brightness(.96); }
+.gembar-suggestions-more {
+  padding-top: 8px;
+  border-top: 1px solid #E7E3DB;
+  color: #726F82;
+  font-size: 11px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gembar-popup, .gembar-toolbar { animation: none; }
+}
+.gembar-status {
+  z-index: 2147483647;
+  max-width: 280px;
+  border-radius: 8px;
+  padding: 9px 11px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(31, 36, 48, .84);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font: 12px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  box-shadow: 0 8px 24px rgba(0,0,0,.24);
+  pointer-events: none;
+}
+@keyframes gembar-pop {
+  from { opacity: 0; transform: translateY(2px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.gembar-popup {
+  z-index: 2147483647;
+  background: rgba(31, 36, 48, .94);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  border-radius: 9px;
+  padding: 11px 13px;
+  font-size: 13px;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28);
+  max-width: 270px;
+}
+.gembar-popup-msg { color: var(--gb-muted); font-size: 11px; margin-bottom: 4px; font-weight: 500; }
+.gembar-popup-sugg { font-weight: 600; margin-bottom: 9px; word-break: break-word; }
+.gembar-popup-actions { display: flex; gap: 6px; }
+.gembar-btn {
+  border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px;
+  cursor: pointer; font-weight: 600; font-family: inherit;
+}
+.gembar-accept { background: #fff; color: var(--gb-ink); }
+.gembar-ignore { background: rgba(255,255,255,.14); color: #fff; }
+
+.gembar-toolbar {
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  max-width: calc(100vw - 16px);
+  gap: 2px;
+  background: rgba(20, 22, 28, .78);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  padding: 4px;
+  border-radius: 10px;
+  box-shadow: 0 10px 26px rgba(0,0,0,.3);
+  position: relative;
+}
+.gembar-toolbar-tail {
+  position: absolute;
+  bottom: -5px;
+  left: 16px;
+  width: 10px;
+  height: 10px;
+  background: rgba(20, 22, 28, .78);
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+.gembar-toolbar.gembar-below .gembar-toolbar-tail {
+  bottom: auto;
+  top: -5px;
+}
+.gembar-tb-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,.75);
+  padding: 7px 11px;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.gembar-tb-icon { flex-shrink: 0; opacity: .85; }
+.gembar-tb-btn:hover { background: rgba(255,255,255,.1); color: #fff; }
+.gembar-tb-btn:hover .gembar-tb-icon { opacity: 1; }
+.gembar-toolbar.gembar-busy .gembar-tb-btn:not(.gembar-tb-loading) { opacity: .35; pointer-events: none; }
+.gembar-tb-btn.gembar-tb-loading .gembar-tb-icon {
+  animation: gembar-spin .7s linear infinite;
+  opacity: 1;
+}
+@keyframes gembar-spin { to { transform: rotate(360deg); } }
+
+/* Visible in-flight indicator shown near a field while suggestions are checked. */
+.gembar-thinking {
+  z-index: 2147483000;
+  border-radius: 999px;
+  padding: 4px 7px;
+  background: #4A3F7A;
+  color: #fff;
+  font: 10px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  box-shadow: 0 2px 8px rgba(37, 28, 67, .2);
+  animation: gembar-pulse 1s ease-in-out infinite;
+}
+@keyframes gembar-pulse {
+  0%, 100% { opacity: .7; }
+  50% { opacity: 1; }
+}
+
