@@ -1,0 +1,14 @@
+{
+  "name": "write-it-correct",
+  "version": "2.1.15",
+  "private": true,
+  "description": "Browser extension for live writing suggestions and rewrites with your Groq API key",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test tests/js/contract.test.js tests/js/background.test.js tests/js/content-ui.test.js tests/js/request-errors.test.js",
+    "check:js": "node --check extension/background.js && node --check extension/selection-geometry.js && node --check extension/request-errors.js && node --check extension/suggestion-logic.js && node --check extension/content.js && node --check extension/popup.js && node --check extension/options.js",
+    "check": "npm run test && npm run check:js"
+  }
+}

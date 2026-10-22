@@ -1,0 +1,32 @@
+# Python generated files
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Node and local tooling
+node_modules/
+npm-debug.log*
+
+# Local secrets and runtime configuration
+.env
+.env.*
+!.env.example
+
+# Local tool credentials and inert files from removed companion tools
+.jetro/
+desktop/
+word-addin/
+
+# Build and coverage output
+dist/
+build/
+coverage/
+*.egg-info/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
