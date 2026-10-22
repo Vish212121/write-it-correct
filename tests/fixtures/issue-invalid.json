@@ -1,0 +1,33 @@
+[
+  {
+    "original": "",
+    "suggestion": "the",
+    "type": "spelling",
+    "message": "Empty original is invalid.",
+    "start": 0,
+    "end": 1
+  },
+  {
+    "original": "teh",
+    "suggestion": "the",
+    "type": "tone",
+    "message": "Unsupported type is invalid.",
+    "start": 0,
+    "end": 3
+  },
+  {
+    "original": "is",
+    "type": "grammar",
+    "message": "Suggestion is missing.",
+    "start": 0,
+    "end": 2
+  },
+  {
+    "original": "bad",
+    "suggestion": "good",
+    "type": "grammar",
+    "message": 42,
+    "start": 0,
+    "end": 3
+  }
+]

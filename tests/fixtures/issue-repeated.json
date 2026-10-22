@@ -1,0 +1,17 @@
+{
+  "text": "teh teh",
+  "issues": [
+    {
+      "original": "teh",
+      "suggestion": "the",
+      "type": "spelling",
+      "message": "Correct the spelling."
+    },
+    {
+      "original": "teh teh",
+      "suggestion": "the the",
+      "type": "style",
+      "message": "Simplify repeated wording."
+    }
+  ]
+}

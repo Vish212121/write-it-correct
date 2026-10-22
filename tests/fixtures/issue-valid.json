@@ -1,0 +1,26 @@
+[
+  {
+    "original": "teh",
+    "suggestion": "the",
+    "type": "spelling",
+    "message": "Correct the spelling.",
+    "start": 0,
+    "end": 3
+  },
+  {
+    "original": "is",
+    "suggestion": "are",
+    "type": "grammar",
+    "message": "Use plural agreement.",
+    "start": 4,
+    "end": 6
+  },
+  {
+    "original": ",,",
+    "suggestion": ",",
+    "type": "punctuation",
+    "message": "Remove the extra comma.",
+    "start": 11,
+    "end": 13
+  }
+]
